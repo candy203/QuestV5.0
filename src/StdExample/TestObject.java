@@ -19,7 +19,7 @@ public class TestObject implements LogicObject {
         posX = 4;
         posY = 4;
 
-        stdIcon = new ImageIcon("D:\\OneDrive\\Schule\\QI\\Info\\QuestV5.0\\imgs\\X.png");
+        stdIcon = new ImageIcon(TestObject.class.getResource("imgs/X.png"));
         icon = stdIcon;
 
         world.register(this, "w");
