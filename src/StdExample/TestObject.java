@@ -1,68 +1,39 @@
 package StdExample;
 
 import Graphics.Event;
+import Graphics.GraphicsManager;
 import Graphics.LogicObject;
 
 import javax.swing.*;
 
-public class TestObject implements LogicObject {
-    private final World world;
-    private int posX;
-    private int posY;
+public class TestObject extends LogicObject {
 
-    private final ImageIcon stdIcon;
-    private ImageIcon icon;
+    public TestObject(GraphicsManager manager) {
+        super(manager);
 
-    public TestObject(World world) {
-        this.world = world;
+        setPosX(4);
+        setPosY(4);
 
-        posX = 4;
-        posY = 4;
+        setShown(true);
 
-        stdIcon = new ImageIcon(TestObject.class.getResource("imgs/X.png"));
-        icon = stdIcon;
+        setImage(new ImageIcon(TestObject.class.getResource("imgs/X.png")));
 
-        world.register(this, "w");
-        world.register(this, "MOUSE");
-    }
-
-    @Override
-    public boolean isShown() {
-        return true;
+        getGraphicsManager().register(this, "w");
+        getGraphicsManager().register(this, "MOUSE");
     }
 
     @Override
     public void mouseOrKeyPressed(Event event) {
         if (event.keyPressed == 'w') {
-            posX = (int) (Math.random() * 8);
-            posY = (int) (Math.random() * 5);
-            world.redraw();
+            setPosX((int) (Math.random() * getGraphicsManager().getColCount()));
+            setPosY((int) (Math.random() * getGraphicsManager().getRowCount()));
+            getGraphicsManager().redraw();
         }
         if (event.mouseButtonPressed == 1)
         {
-            posX = event.mousePosX;
-            posY = event.mousePosY;
-            world.redraw();
+            setPosX(event.mousePosX);
+            setPosY(event.mousePosY);
+            getGraphicsManager().redraw();
         }
-    }
-
-    @Override
-    public ImageIcon getImage() {
-        return icon;
-    }
-
-    @Override
-    public void setResizedImage(ImageIcon icon) {
-        this.icon = icon;
-    }
-
-    @Override
-    public int getXPos() {
-        return posX;
-    }
-
-    @Override
-    public int getYPos() {
-        return posY;
     }
 }

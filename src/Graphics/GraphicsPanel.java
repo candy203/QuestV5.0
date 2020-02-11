@@ -1,7 +1,5 @@
 package Graphics;
 
-import StdExample.StdWorld;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -10,32 +8,31 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.*;
 
-public class WorldPanel extends JPanel implements KeyListener, MouseListener {
+class GraphicsPanel extends JPanel implements KeyListener, MouseListener {
     private final int cellSize;
     private final int rowCount;
     private final int colCount;
 
-    private final StdWorld world;
-    private final Map<String, Collection<LogicObject>> logicObjectCharacterMap;
+    private final GraphicsManager graphicsManager;
+    private final Map<String, Collection<LogicObject>> logicObjectStringMap;
 
     //todo: colCount and rowCount instead of width and height
-    public WorldPanel(int width, int height, int cellSize, StdWorld world) {
+    public GraphicsPanel(int rowCount, int colCount, int cellSize, GraphicsManager graphicsManager) {
         this.cellSize = cellSize;
-
-        rowCount = height / cellSize;
-        colCount = width / cellSize;
+        this.rowCount = rowCount;
+        this.colCount = colCount;
 
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(this);
         addMouseListener(this);
 
-        logicObjectCharacterMap = new HashMap<>();
-        this.world = world;
+        logicObjectStringMap = new HashMap<>();
+        this.graphicsManager = graphicsManager;
     }
 
     public void register(LogicObject obj, String c) {
-        logicObjectCharacterMap.computeIfAbsent(c, k -> new ArrayList<>()).add(obj);
+        logicObjectStringMap.computeIfAbsent(c, k -> new ArrayList<>()).add(obj);
     }
 
     @Override
@@ -44,14 +41,14 @@ public class WorldPanel extends JPanel implements KeyListener, MouseListener {
 
         drawRects(g);
 
-        redraw(world.getObjects(), g);
+        redraw(graphicsManager.getObjects(), g);
     }
 
     private void redraw(Collection<LogicObject> logicObjects, Graphics g) {
         for (LogicObject obj : logicObjects) {
             if (obj.isShown()) {
                 ImageIcon icon = obj.getImage();
-                icon.paintIcon(this, g, obj.getXPos() * cellSize, obj.getYPos() * cellSize);
+                icon.paintIcon(this, g, obj.getPosX() * cellSize, obj.getPosY() * cellSize);
             }
         }
     }
@@ -83,7 +80,7 @@ public class WorldPanel extends JPanel implements KeyListener, MouseListener {
     }
 
     private void notifyObjects(String key, Event event) {
-        Collection<LogicObject> logicObjects = logicObjectCharacterMap.getOrDefault(key, new ArrayList<>());
+        Collection<LogicObject> logicObjects = logicObjectStringMap.getOrDefault(key, new ArrayList<>());
 
         for (LogicObject obj : logicObjects) {
             obj.mouseOrKeyPressed(event);

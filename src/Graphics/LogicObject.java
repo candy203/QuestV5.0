@@ -2,17 +2,57 @@ package Graphics;
 
 import javax.swing.ImageIcon;
 
-public interface LogicObject
+public abstract class LogicObject
 {
-    boolean isShown();
+    private ImageIcon icon;
+    private boolean isShown = false;
+    private final GraphicsManager graphicsManager;
 
-    void mouseOrKeyPressed(Event event);
+    private int posX;
+    private int posY;
 
-    ImageIcon getImage();
+    protected LogicObject(GraphicsManager graphicsManager) {
+        this.graphicsManager = graphicsManager;
+    }
 
-    void setResizedImage(ImageIcon icon);
+    public boolean isShown() {
+        return isShown;
+    }
 
-    int getXPos();
+    public void setShown(boolean isShown) {
+        this.isShown = isShown;
+    }
 
-    int getYPos();
+    public abstract void mouseOrKeyPressed(Event event);
+
+    public void setImage(ImageIcon icon) {
+        this.icon = graphicsManager.resize(icon);
+    }
+
+    ImageIcon getImage() {
+        return icon;
+    }
+
+    public void setPosX(int posX)
+    {
+        this.posX = posX;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public void setPosY(int posY)
+    {
+        this.posY = posY;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public GraphicsManager getGraphicsManager()
+    {
+        return graphicsManager;
+    }
 }
