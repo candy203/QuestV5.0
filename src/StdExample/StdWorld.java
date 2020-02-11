@@ -20,6 +20,7 @@ public class StdWorld implements World
     {
         logicObjects = new ArrayList<>();
 
+        //todo: Remove size and implement in Panel
         this.cellSize = cellSize;
         rowCount = height / cellSize;
         colCount = width / cellSize;
@@ -42,6 +43,7 @@ public class StdWorld implements World
         redraw();
     }
 
+    //todo: Implement in World Panel
     private void resize(LogicObject obj)
     {
         Image imgOld = obj.getImage().getImage();

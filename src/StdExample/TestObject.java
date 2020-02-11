@@ -2,7 +2,6 @@ package StdExample;
 
 import Graphics.Event;
 import Graphics.LogicObject;
-import Graphics.World;
 
 import javax.swing.*;
 

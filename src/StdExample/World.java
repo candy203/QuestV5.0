@@ -1,4 +1,6 @@
-package Graphics;
+package StdExample;
+
+import Graphics.LogicObject;
 
 import java.util.Collection;
 

@@ -18,6 +18,7 @@ public class WorldPanel extends JPanel implements KeyListener, MouseListener {
     private final StdWorld world;
     private final Map<String, Collection<LogicObject>> logicObjectCharacterMap;
 
+    //todo: colCount and rowCount instead of width and height
     public WorldPanel(int width, int height, int cellSize, StdWorld world) {
         this.cellSize = cellSize;
 
