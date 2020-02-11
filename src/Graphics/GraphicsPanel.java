@@ -8,6 +8,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.*;
 
+/**
+ * Die Klasse GraphicsPanel zeichnet die Quadrate und die LogicObjects.
+ */
 class GraphicsPanel extends JPanel implements KeyListener, MouseListener {
     private final int cellSize;
     private final int rowCount;
@@ -16,7 +19,6 @@ class GraphicsPanel extends JPanel implements KeyListener, MouseListener {
     private final GraphicsManager graphicsManager;
     private final Map<String, Collection<LogicObject>> logicObjectStringMap;
 
-    //todo: colCount and rowCount instead of width and height
     public GraphicsPanel(int rowCount, int colCount, int cellSize, GraphicsManager graphicsManager) {
         this.cellSize = cellSize;
         this.rowCount = rowCount;
@@ -31,19 +33,34 @@ class GraphicsPanel extends JPanel implements KeyListener, MouseListener {
         this.graphicsManager = graphicsManager;
     }
 
-    public void register(LogicObject obj, String c) {
-        logicObjectStringMap.computeIfAbsent(c, k -> new ArrayList<>()).add(obj);
+    /**
+     * LogicObjects können sich für bestimmte Informationen registrieren
+     * @param obj ein LogicObject
+     * @param m die zu empfangene Information, mögliche Parameter: Ein Buchstabe bzw. Zeichen von der Tastatur,
+     *          'MOUSE' für Mausdrücke
+     */
+    public void register(LogicObject obj, String m) {
+        logicObjectStringMap.computeIfAbsent(m, k -> new ArrayList<>()).add(obj);
     }
 
+    /**
+     * Malkomponennte
+     * @param g Übergebende Malkomponennte
+     */
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        super.paintComponent(g); // Radieren
 
         drawRects(g);
 
         redraw(graphicsManager.getObjects(), g);
     }
 
+    /**
+     * Zeichnet alle sichtbaren Objekte
+     * @param logicObjects Collection aller Objekte
+     * @param g Malkomponennte
+     */
     private void redraw(Collection<LogicObject> logicObjects, Graphics g) {
         for (LogicObject obj : logicObjects) {
             if (obj.isShown()) {
@@ -53,6 +70,10 @@ class GraphicsPanel extends JPanel implements KeyListener, MouseListener {
         }
     }
 
+    /**
+     * Zeichnet die Rechtecke
+     * @param g Malkomponennte
+     */
     private void drawRects(Graphics g) {
         for (int i = 0; i < colCount; i++) {
             for (int k = 0; k < rowCount; k++) {

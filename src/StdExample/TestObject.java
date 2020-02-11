@@ -12,7 +12,7 @@ public class TestObject extends LogicObject {
         super(manager);
 
         setPosX(4);
-        setPosY(4);
+        setPosY(3);
 
         setShown(true);
 
@@ -27,6 +27,7 @@ public class TestObject extends LogicObject {
         if (event.keyPressed == 'w') {
             setPosX((int) (Math.random() * getGraphicsManager().getColCount()));
             setPosY((int) (Math.random() * getGraphicsManager().getRowCount()));
+            setImage(new ImageIcon(TestObject.class.getResource("imgs/bismark_nett.png")));
             getGraphicsManager().redraw();
         }
         if (event.mouseButtonPressed == 1)
