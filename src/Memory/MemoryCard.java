@@ -60,7 +60,10 @@ public class MemoryCard extends LogicObject {
      */
     void close()
     {
-        setImage(defaultImage);
+        if (!isAlreadyMatch())
+        {
+            setImage(defaultImage);
+        }
     }
 
     /**
